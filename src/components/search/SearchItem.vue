@@ -1,30 +1,30 @@
 <template>
-  <div class="popular-item">
-    <div class="popular-item__wrapper">
-      <router-link :to="{ name: 'movies', params: { id: popular.id } }">
+  <div class="search-item" v-if="search.poster_path">
+    <div class="search-item__wrapper">
+      <router-link :to="{ name: 'movies', params: { id: search.id } }">
         <img
-          class="popular-item__poster"
+          class="search-item__poster"
           :src="
-            `https://image.tmdb.org/t/p/w220_and_h330_face/${popular.poster_path}`
+            `https://image.tmdb.org/t/p/w220_and_h330_face/${search.poster_path}`
           "
-          :alt="popular.title"
+          :alt="search.title"
         />
-        <div class="popular-item__rating">
-          Rating: <span>{{ popular.vote_average }}</span>
+        <div class="search-item__rating">
+          Rating: <span>{{ search.vote_average }}</span>
         </div>
-        <h4 class="popular-item__title">{{ popular.title }}</h4>
-        <div class="popular-item__genres" v-if="popular.genres_new">
+        <h4 class="search-item__title">{{ search.title }}</h4>
+        <div class="search-item__genres" v-if="search.genres_new">
           Genres:
           <span
-            class="popular-item__genres--name"
-            v-for="genres in popular.genres_new"
+            class="search-item__genres--name"
+            v-for="genres in search.genres_new"
             :key="genres.id"
           >
             {{ genres.name }}</span
           >
         </div>
-        <p class="popular-item__release">
-          Release date: {{ popular.release_date.replace(/\-/g, ".") }}
+        <p class="search-item__release">
+          Release date: {{ search.release_date.replace(/\-/g, ".") }}
         </p>
       </router-link>
     </div>
@@ -33,9 +33,9 @@
 
 <script>
 export default {
-  name: "PopularItem",
+  name: "searchItem",
   props: {
-    popular: {
+    search: {
       type: Object,
       required: true
     }
@@ -44,11 +44,7 @@ export default {
 </script>
 
 <style lang="less">
-.popular-item {
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+.search-item {
   &__genres {
     font-weight: @weight-bold;
     font-size: @size-small-x;
