@@ -1,8 +1,7 @@
 export default {
   state: {
     populars: [],
-    popularsLink:
-      `/movie/popular?api_key=${process.env.VUE_APP_API_KEY}&language=en-US&page=`,
+    popularsLink: `${process.env.VUE_APP_URL_API}/movie/popular?api_key=${process.env.VUE_APP_API_KEY}&language=en-US&page=`,
     pages: 1,
     genersNamePopular: ""
   },
@@ -23,7 +22,7 @@ export default {
     async fetchPopular({ commit, state }) {
       try {
         const res = await fetch(
-          process.env.VUE_APP_URL_API + state.popularsLink + state.pages
+          state.popularsLink + state.pages
         );
         const data = await res.json();
         commit("updatePopular", data);

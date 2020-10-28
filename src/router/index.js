@@ -13,14 +13,12 @@ const routes = [
   {
     path: "/favourites",
     name: "favourites",
-    component: () =>
-      import("../views/Favourites.vue")
+    component: () => import("../views/Favourites.vue")
   },
   {
     path: "/movies/:id",
     name: "movies",
-    component: () =>
-        import("../views/MoviesPage"),
+    component: () => import("../views/MoviesPage"),
     props: true
   }
 ];

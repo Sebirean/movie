@@ -27,33 +27,69 @@
           </div>
         </div>
       </div>
+      <div class="movie__recommendations container">
+        <h1 class="movie__title">Recommendations</h1>
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <movie-item
+              class="swiper-slide"
+              v-for="(item, index) in getRecommendations"
+              :key="index"
+              :item="item"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import MovieItem from "@/components/MovieItem";
+
+import Swiper from "swiper";
+
 export default {
   name: "MoviesPage",
+  components: {
+    MovieItem
+  },
   props: {
     id: {
-      type: Number,
-      default: 0
+      type: String,
+      default: ""
     }
   },
-  computed: {
-    ...mapGetters(["getMovie"])
+  data() {
+    return {
+      mySwiper: null
+    };
   },
-  mounted() {
+  computed: {
+    ...mapGetters(["getMovie", "getRecommendations"])
+  },
+  created() {
     this.setMovieId(this.id);
     this.fetchMovie();
+    this.setRecommendationsId(this.id);
+    this.fetchRecommendations();
   },
   updated() {
     this.$refs.backgroundMovie.style.background = `url(https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${this.getMovie.poster_path})`;
+    this.mySwiper = new Swiper(".swiper-container", {
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false
+      },
+      slidesPerView: 6,
+      spaceBetween: 30,
+      loop: true
+    });
   },
   methods: {
-    ...mapActions(["fetchMovie"]),
-    ...mapMutations(["setMovieId"])
+    ...mapActions(["fetchMovie", "fetchRecommendations"]),
+    ...mapMutations(["setMovieId", "setRecommendationsId"])
   }
 };
 </script>
@@ -90,6 +126,10 @@ export default {
         margin: 0;
       }
     }
+  }
+
+  &__title {
+    text-align: center;
   }
 }
 </style>

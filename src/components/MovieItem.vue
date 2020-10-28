@@ -1,31 +1,29 @@
 <template>
-  <div class="popular-item">
-    <div class="popular-item__wrapper">
-      <router-link :to="{ name: 'movies', params: { id: popular.id } }">
+  <div class="movie-item" v-if="item.poster_path">
+    <div class="movie-item__wrapper">
+      <router-link :to="{ name: 'movies', params: { id: movieId } }">
         <img
-          class="popular-item__poster"
+          class="movie-item__poster"
           :src="
-            `https://image.tmdb.org/t/p/w220_and_h330_face/${popular.poster_path}`
+            `https://image.tmdb.org/t/p/w220_and_h330_face/${item.poster_path}`
           "
-          :alt="popular.title"
+          :alt="item.title"
         />
-        <div class="popular-item__rating">
-          Rating: <span>{{ popular.vote_average }}</span>
+        <div class="movie-item__rating">
+          Rating: <span>{{ item.vote_average }}</span>
         </div>
-        <h4 class="popular-item__title">{{ popular.title }}</h4>
-        <div class="popular-item__genres" v-if="popular.genres_new">
+        <h4 class="movie-item__title">{{ item.title }}</h4>
+        <div class="movie-item__genres" v-if="item.genres_new">
           Genres:
           <span
-            class="popular-item__genres--name"
-            v-for="genres in popular.genres_new"
+            class="movie-item__genres--name"
+            v-for="genres in item.genres_new"
             :key="genres.id"
           >
             {{ genres.name }}</span
           >
         </div>
-        <p class="popular-item__release">
-          Release date: {{ popular.release_date.replace(/\-/g, ".") }}
-        </p>
+        <p class="movie-item__release">Release date: {{ item.release_date }}</p>
       </router-link>
     </div>
   </div>
@@ -33,18 +31,26 @@
 
 <script>
 export default {
-  name: "PopularItem",
+  name: "MovieItem",
   props: {
-    popular: {
+    item: {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      movieId: ""
+    };
+  },
+  mounted() {
+    this.movieId = String(this.item.id);
   }
 };
 </script>
 
 <style lang="less">
-.popular-item {
+.movie-item {
   a {
     text-decoration: none;
     color: inherit;

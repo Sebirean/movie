@@ -5,24 +5,23 @@
     </div>
     <h1 class="popular__title">{{ isSearch ? "Search" : "Popular movie" }}</h1>
     <div class="popular__wrapper" v-if="!isSearch">
-      <popular-item
-        v-for="popular in getPopulars"
-        :key="popular.id"
-        :popular="popular"
+      <movie-item
+        v-for="(item, index) in getPopulars"
+        :key="index"
+        :item="item"
       />
     </div>
     <div class="popular__search-block" v-if="isSearch">
-      <search-item
-        v-for="search in getSearch"
-        :key="search.id"
-        :search="search"
+      <movie-item
+        v-for="(item, index) in getSearch"
+        :key="index"
+        :item="item"
       />
     </div>
   </div>
 </template>
 <script>
-import PopularItem from "@/components/PopularItem";
-import SearchItem from "@/components/search/SearchItem";
+import MovieItem from "@/components/MovieItem";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 
 import addGenres from "@/mixins/addGenres";
@@ -30,8 +29,7 @@ import addGenres from "@/mixins/addGenres";
 export default {
   name: "PopularMovies",
   components: {
-    PopularItem,
-    SearchItem
+    MovieItem
   },
   mixins: [addGenres],
   data() {
@@ -52,7 +50,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.fetchGenres();
     this.fetchPopular();
   },

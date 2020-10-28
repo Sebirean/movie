@@ -1,7 +1,7 @@
 export default {
   state: {
     search: [],
-    searchLink: `/search/movie?api_key=${process.env.VUE_APP_API_KEY}&language=en-US&include_adult=false`,
+    searchLink: `${process.env.VUE_APP_URL_API}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&language=en-US&include_adult=false`,
     utmSearchQuery: "&query=",
     searchText: "",
     utmSearchPage: "&page=",
@@ -30,8 +30,7 @@ export default {
     async fetchSearch({ commit, state }) {
       try {
         const res = await fetch(
-          process.env.VUE_APP_URL_API +
-            state.searchLink +
+          state.searchLink +
             state.utmSearchQuery +
             state.searchText +
             state.utmSearchPage +
@@ -47,8 +46,7 @@ export default {
     async fetchSearchScroll({ commit, state }) {
       try {
         const res = await fetch(
-          process.env.VUE_APP_URL_API +
-            state.searchLink +
+          state.searchLink +
             state.utmSearchQuery +
             state.searchText +
             state.utmSearchPage +

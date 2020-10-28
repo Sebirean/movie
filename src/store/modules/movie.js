@@ -1,7 +1,7 @@
 export default {
   state: {
     movie: [],
-    movieLink: "/movie/",
+    movieLink: `${process.env.VUE_APP_URL_API}/movie/`,
     movieUtm: `?api_key=${process.env.VUE_APP_API_KEY}&language=en-US`,
     movieId: 0
   },
@@ -22,7 +22,7 @@ export default {
     async fetchMovie({ commit, state }) {
       try {
         const res = await fetch(
-          process.env.VUE_APP_URL_API + state.movieLink + state.movieId + state.movieUtm
+          state.movieLink + state.movieId + state.movieUtm
         );
         const data = await res.json();
         commit("setMovie", data);
